@@ -1,0 +1,13 @@
+form {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 250px;
+    width: fit-content;
+    margin-bottom: 10px;
+
+    &>div {
+        margin: auto;
+        width: 100%;
+    }
+}
