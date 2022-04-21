@@ -14,25 +14,40 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f2f2f2;
+  color: #333333;
 }
 
 .container {
-  min-width: min-content;
-  width: 500px;
-  max-width: fit-content;
+  width: auto;
   margin: auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
+  background: #FFF;
 
-  &>* {
-    margin: 10px
+  h2 {
+    margin: auto;
   }
 }
 
 button {
   padding: 10px 40px;
-  margin: 10px;
+  margin: 15px;
+  text-align: center;
+}
+
+a {
+  margin: 15px auto;
+}
+
+input.invalid {
+  border: red solid 3px;
+}
+
+.invalid {
+  color: red;
+  font-size: smaller;
 }

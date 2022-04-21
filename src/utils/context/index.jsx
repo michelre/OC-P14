@@ -5,12 +5,12 @@ export const EmployeesContext = React.createContext()
 
 export const EmployeesProvider = ({ children }) => {
   const [employees, setEmployees] = useState(data.employees)
-  const saveEmployees = (newEmployees) => {
-    setEmployees({ ...employees, ...newEmployees })
+  const saveEmployee = (newEmployee) => {
+    setEmployees(employees.concat(newEmployee))
   }
 
   return (
-    <EmployeesContext.Provider value={{ employees, saveEmployees }}>
+    <EmployeesContext.Provider value={{ employees, saveEmployee }}>
       {children}
     </EmployeesContext.Provider>
   )

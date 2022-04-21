@@ -7,7 +7,7 @@ import data from '../../mocks'
 function EmployeeList() {
   const labels = data.labels
   const { employees } = React.useContext(EmployeesContext)
-  console.log(employees)
+
   return (
     <div id="employee" className="container">
       <h1>Current Employees</h1>

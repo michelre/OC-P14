@@ -1,13 +1,22 @@
 form {
     display: flex;
     flex-direction: column;
-
     min-width: 250px;
-    width: fit-content;
+    width: auto;
     margin-bottom: 10px;
+
+    *:not(button) {
+        text-align: left !important;
+    }
 
     &>div {
         margin: auto;
         width: 100%;
+        padding: 0 25px;
+    }
+
+    fieldset {
+        padding: 0 25px;
+        margin: 5px auto;
     }
 }

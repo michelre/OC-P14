@@ -1,4 +1,4 @@
-import Rows from '../Rows'
+import Rows from './Rows'
 
 function Table(props) {
   return (

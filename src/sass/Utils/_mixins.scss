@@ -5,3 +5,11 @@
         @content;
     }
 }
+
+@mixin input_select {
+    width: 250px;
+    margin-top: 2px;
+    padding: 5px 10px;
+    display: block;
+    box-sizing: border-box;
+}
