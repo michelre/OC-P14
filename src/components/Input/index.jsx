@@ -1,28 +1,9 @@
 import React from 'react'
 import '../../App.css'
 
-function Input({ type, label, id, onChange, required }) {
-  let pattern,
-    min,
-    max = ''
-
-  switch (type) {
-    case 'number':
-      pattern = '[0-9]{5}'
-      min = '0'
-      max = '99999'
-      break
-
-    case 'text':
-      pattern = '[A-Za-z\\s]{2,}'
-      break
-
-    default:
-      break
-  }
-
+function Input({ type, label, id, onChange, required, pattern, min, max }) {
   return (
-    <div>
+    <div className={label?.replaceAll(' ', '').toLowerCase()}>
       {label && (
         <label>
           {label}

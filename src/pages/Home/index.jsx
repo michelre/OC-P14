@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { EmployeesContext } from '../../utils/context'
 import Form from '../../components/Form'
 import Header from '../../components/Header'
 import Modal from '../../components/Modal'
 import '../../App.css'
 
 function Home() {
+  const { saveEmployee } = useContext(EmployeesContext)
   const states = [
     {
       name: 'Alabama',
@@ -252,12 +254,17 @@ function Home() {
     'Human Resource',
     'Legal',
   ]
-  const [isValidForm, setValidForm] = useState()
-  const [isOpen, setOpen] = useState()
+  const [isOpen, setOpen] = useState(false)
+  const [submittedData, setSubmittedData] = useState({})
+  const [submit, setSubmit] = useState(false)
 
   useEffect(() => {
-    isValidForm && setOpen(true)
-  }, [isValidForm])
+    if (submit) {
+      saveEmployee(submittedData)
+      setOpen(true)
+      setSubmit(false)
+    }
+  }, [saveEmployee, submit, submittedData])
 
   return (
     <React.Fragment>
@@ -268,8 +275,8 @@ function Home() {
         <Form
           states={statesName}
           departments={departments}
-          setValidForm={setValidForm}
-          isValidForm={isValidForm}
+          setSubmitData={setSubmittedData}
+          setSubmit={setSubmit}
         />
         <Modal
           content={'Employee Created!'}
