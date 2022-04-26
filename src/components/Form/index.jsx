@@ -1,52 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Input from '../Input'
 import Select from '../Select'
 
-function Form({ states, departments, setSubmitData, setSubmit }) {
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
+function Form({ states, departments, setSubmitData }) {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState()
   const [startDate, setStartDate] = useState()
-  const [department, setDepartment] = useState()
   const [street, setStreet] = useState()
   const [city, setCity] = useState()
-  const [state, setState] = useState()
   const [zipCode, setZipCode] = useState()
-  const [isValidForm, setValidForm] = useState()
+  const [selectValueState, setSelectValueState] = useState()
+  const [selectValueDepartment, setSelectValueDepartment] = useState()
 
-  useEffect(() => {
-    console.log(isValidForm)
-    const inputs = document.getElementsByTagName('input')
-    const arrayFromInputs = [...inputs]
-    arrayFromInputs.forEach((element) => {
-      if (element.required === true) {
-        if (element.validity.patternMismatch !== false) {
-          setValidForm(false)
-        } else {
-          setValidForm(true)
-        }
-      }
-    })
-  }, [setValidForm, isValidForm])
-
-  function invalidMessage(target) {
-    const span = document.createElement('span')
-    span.classList.add('invalid')
-    span.textContent = target.parentNode.textContent + ' est invalide'
-    target.validity.patternMismatch !== false
-      ? target.after(span)
-      : target.parentNode.querySelector('span')?.remove()
+  function setInvalidClass(target) {
+    if (target.value.length <= 1 && target.className !== 'invalid') {
+      target.classList.add('invalid')
+    } else {
+      target.classList.remove('invalid')
+    }
   }
 
   function handleChange(target, id) {
     switch (id) {
       case 'firstName':
         setFirstName(target.value)
-        invalidMessage(target)
+        setInvalidClass(target)
         break
       case 'lastName':
         setLastName(target.value)
-        invalidMessage(target)
+        setInvalidClass(target)
         break
       case 'dateOfBirth':
         setDateOfBirth(target.value)
@@ -60,14 +43,8 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
       case 'city':
         setCity(target.value)
         break
-      case 'state':
-        setState(target.value)
-        break
       case 'zipCode':
         setZipCode(target.value)
-        break
-      case 'department':
-        setDepartment(target.value)
         break
       default:
         break
@@ -75,21 +52,28 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
   }
 
   function handleSubmit(event) {
+    const regexName = new RegExp('[a-zA-Z_ -s\\p{latin}]{2,}$', 'g')
     const newEmployee = {
       firstName: firstName,
       lastName: lastName,
       startDate: startDate,
-      department: department,
+      department: selectValueDepartment,
       dateOfBirth: dateOfBirth,
       street: street,
       city: city,
-      state: state,
+      state: selectValueState,
       zipCode: zipCode,
     }
 
-    if (isValidForm) {
-      setSubmit(true)
+    if (
+      regexName.test(firstName) === true &&
+      firstName.length > 1 &&
+      regexName.test(lastName) === true &&
+      lastName.length > 1
+    ) {
       setSubmitData(newEmployee)
+    } else {
+      alert('Formulaire invalide ou incomplet!')
     }
     event.preventDefault()
   }
@@ -102,8 +86,6 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
         id={'firstName'}
         value={firstName}
         onChange={(e) => handleChange(e, 'firstName')}
-        required={true}
-        pattern={"([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"}
       />
       <Input
         type={'text'}
@@ -111,7 +93,6 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
         id={'lastName'}
         value={lastName}
         onChange={(e) => handleChange(e, 'lastName')}
-        required={true}
       />
       <Input
         type={'date'}
@@ -119,7 +100,6 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
         id={'dateOfBirth'}
         value={dateOfBirth}
         onChange={(e) => handleChange(e, 'dateOfBirth')}
-        required={true}
       />
       <Input
         type={'date'}
@@ -144,9 +124,10 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
           onChange={(e) => handleChange(e, 'city')}
         />
         <Select
-          name={'State'}
+          label={'State'}
           options={states}
-          onChange={(e) => handleChange(e, 'state')}
+          setSelectValue={setSelectValueState}
+          selectValue={selectValueState}
         />
         <Input
           type={'number'}
@@ -160,9 +141,10 @@ function Form({ states, departments, setSubmitData, setSubmit }) {
       </fieldset>
       <div>
         <Select
-          name={'Department'}
+          label={'Department'}
           options={departments}
-          onChange={(e) => handleChange(e, 'department')}
+          setSelectValue={setSelectValueDepartment}
+          selectValue={selectValueDepartment}
         />
       </div>
       <div className="submitContainer">

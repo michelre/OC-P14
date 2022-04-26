@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../App.css'
 
-function Input({ type, label, id, onChange, required, pattern, min, max }) {
+function Input({ type, label, id, onChange }) {
   return (
     <div className={label?.replaceAll(' ', '').toLowerCase()}>
       {label && (
@@ -10,11 +10,7 @@ function Input({ type, label, id, onChange, required, pattern, min, max }) {
           <input
             type={type}
             id={id}
-            pattern={pattern}
             onChange={(e) => onChange && onChange(e.target)}
-            min={min}
-            max={max}
-            required={required}
           />
         </label>
       )}

@@ -4,12 +4,12 @@ import Table from '../../components/Table'
 import { EmployeesContext } from '../../utils/context'
 import data from '../../mocks'
 
-function EmployeeList() {
+function EmployeesList() {
   const labels = data.labels
   const { employees } = React.useContext(EmployeesContext)
 
   return (
-    <div id="employee" className="container">
+    <div id="employees" className="container">
       <h1>Current Employees</h1>
       <Table
         id="employee-table"
@@ -17,9 +17,11 @@ function EmployeeList() {
         data={employees}
         labels={labels}
       />
-      <NavLink to={'/'}>Home</NavLink>
+      <nav>
+        <NavLink to={'/'}>Home</NavLink>
+      </nav>
     </div>
   )
 }
 
-export default EmployeeList
+export default EmployeesList

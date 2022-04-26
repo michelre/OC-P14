@@ -1,3 +1,68 @@
-select {
-    @include input_select
+.selectmenu {
+    display: flex;
+    flex-direction: column;
+
+
+    .selectmenu-text {
+        @include input_select;
+        color: inherit;
+        background: #efefef;
+        border: solid 1px #e4e4e4;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        &.borderBottomNone {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .selectmenu-arrow {
+            background: no-repeat center/50% url('../../assets/arrow.svg');
+            width: 20px;
+            height: 20px;
+        }
+
+        .selectmenu-arrow.up {
+            transform: rotate(90deg)
+        }
+
+        .selectmenu-arrow.down {
+            transform: rotate(270deg)
+        }
+
+    }
+
+    .selectmenu {
+        display: none;
+    }
+
+    .selectmenu.open {
+        display: block;
+        background: #FAFAFA;
+        border: 1px solid #e4e4e4;
+        border-radius: 0 0 5px 5px;
+        margin-top: -3px;
+        padding: 0;
+        position: absolute;
+        z-Index: 1;
+
+
+        li.item {
+            cursor: pointer;
+        }
+
+        li.item:hover {
+            background: #007fff;
+            color: #FFF;
+        }
+
+
+        li.item span {
+            padding: 5px;
+            text-align: left;
+        }
+    }
 }

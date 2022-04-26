@@ -6,7 +6,7 @@ import Header from '../../components/Header'
 import Modal from '../../components/Modal'
 import '../../App.css'
 
-function Home() {
+function CreateEmployee() {
   const { saveEmployee } = useContext(EmployeesContext)
   const states = [
     {
@@ -255,28 +255,26 @@ function Home() {
     'Legal',
   ]
   const [isOpen, setOpen] = useState(false)
-  const [submittedData, setSubmittedData] = useState({})
-  const [submit, setSubmit] = useState(false)
+  const [submittedData, setSubmittedData] = useState()
 
   useEffect(() => {
-    if (submit) {
+    if (submittedData !== undefined) {
       saveEmployee(submittedData)
       setOpen(true)
-      setSubmit(false)
+      setSubmittedData()
     }
-  }, [saveEmployee, submit, submittedData])
+  }, [saveEmployee, submittedData])
 
   return (
     <React.Fragment>
       <Header h1={'HRnet'} class={'title'} />
       <div className="container">
-        <NavLink to={'./employee-list'}>View Current Employees</NavLink>
+        <NavLink to={'./employees-list'}>View Current Employees</NavLink>
         <h2>Create Employee</h2>
         <Form
           states={statesName}
           departments={departments}
           setSubmitData={setSubmittedData}
-          setSubmit={setSubmit}
         />
         <Modal
           content={'Employee Created!'}
@@ -288,4 +286,4 @@ function Home() {
   )
 }
 
-export default Home
+export default CreateEmployee
