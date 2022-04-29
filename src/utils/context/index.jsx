@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState, createContext } from 'react'
 import data from '../../mocks'
 
-export const EmployeesContext = React.createContext()
+export const EmployeesContext = createContext()
 
 export const EmployeesProvider = ({ children }) => {
   const [employees, setEmployees] = useState(data.employees)

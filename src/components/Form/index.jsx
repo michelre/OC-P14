@@ -1,17 +1,23 @@
 import { useState } from 'react'
 import Input from '../Input'
 import Select from '../Select'
+import DatePickerApp from '../DatePicker'
 
 function Form({ states, departments, setSubmitData }) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [dateOfBirth, setDateOfBirth] = useState()
-  const [startDate, setStartDate] = useState()
+  const [dateOfBirth, setDateOfBirth] = useState(new Date())
+  const [startDate, setStartDate] = useState(new Date())
   const [street, setStreet] = useState()
   const [city, setCity] = useState()
   const [zipCode, setZipCode] = useState()
   const [selectValueState, setSelectValueState] = useState()
   const [selectValueDepartment, setSelectValueDepartment] = useState()
+
+  const dateFormat = (date) =>
+    `${date.getDate() < 10 ? '0' : ''}${date.getDate()}/${
+      date.getMonth() < 10 ? '0' : ''
+    }${date.getMonth() + 1}/${date.getFullYear()}`
 
   function setInvalidClass(target) {
     if (target.value.length <= 1 && target.className !== 'invalid') {
@@ -56,9 +62,9 @@ function Form({ states, departments, setSubmitData }) {
     const newEmployee = {
       firstName: firstName,
       lastName: lastName,
-      startDate: startDate,
+      startDate: dateFormat(startDate),
       department: selectValueDepartment,
-      dateOfBirth: dateOfBirth,
+      dateOfBirth: dateFormat(dateOfBirth),
       street: street,
       city: city,
       state: selectValueState,
@@ -94,19 +100,19 @@ function Form({ states, departments, setSubmitData }) {
         value={lastName}
         onChange={(e) => handleChange(e, 'lastName')}
       />
-      <Input
-        type={'date'}
-        label={'Date of birth'}
-        id={'dateOfBirth'}
-        value={dateOfBirth}
-        onChange={(e) => handleChange(e, 'dateOfBirth')}
+
+      <DatePickerApp
+        label={'Date of Birth'}
+        id="date-of-birth"
+        startDate={dateOfBirth}
+        setStartDate={setDateOfBirth}
       />
-      <Input
-        type={'date'}
-        label={'Start date'}
-        id={'startDate'}
-        value={startDate}
-        onChange={(e) => handleChange(e, 'startDate')}
+
+      <DatePickerApp
+        label={'Start Date'}
+        id="start-date"
+        startDate={startDate}
+        setStartDate={setStartDate}
       />
 
       <fieldset>
@@ -143,8 +149,8 @@ function Form({ states, departments, setSubmitData }) {
         <Select
           label={'Department'}
           options={departments}
-          setSelectValue={setSelectValueDepartment}
-          selectValue={selectValueDepartment}
+          setSelected={setSelectValueDepartment}
+          selected={selectValueDepartment}
         />
       </div>
       <div className="submitContainer">
