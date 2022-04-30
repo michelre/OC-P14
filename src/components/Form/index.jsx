@@ -160,8 +160,8 @@ function Form({ states, departments, setSubmitData }) {
           label={'Department'}
           options={departments}
           // @ts-ignore
-          setSelected={setSelectValueDepartment}
-          selected={selectValueDepartment}
+          setSelectValue={setSelectValueDepartment}
+          selectValue={selectValueDepartment}
         />
       </div>
       <div className="submitContainer">

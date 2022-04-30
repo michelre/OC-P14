@@ -70,6 +70,8 @@ function Select({ label, options, selectValue, setSelectValue }) {
             displayOptions ? 'borderBottomNone' : ''
           }`}
           tabIndex={0}
+          aria-haspopup={"listbox"}
+          aria-expanded={displayOptions}
           onClick={(e) => handleClick(selectmenuEl, e)}
           onKeyPress={(e) => handleClick(selectmenuEl, e)}
         >
@@ -78,11 +80,12 @@ function Select({ label, options, selectValue, setSelectValue }) {
             className={`selectmenu-arrow ${displayOptions ? 'up' : 'down'}`}
           ></span>
         </div>
-        <div
+        <ul
           ref={ulEl}
           className={`selectmenu ${displayOptions ? 'open' : ''}`}
           aria-hidden={displayOptions}
           aria-disabled={false}
+          aria-activedescendant={options.find(e => e === selectValue)}
           style={
             displayOptions
               ? {
@@ -92,7 +95,7 @@ function Select({ label, options, selectValue, setSelectValue }) {
               : { display: 'none' }
           }
           role="listbox"
-          tabIndex={0}
+          tabIndex={-1}
         >
           {options.map((item, index) => {
             return (
@@ -100,16 +103,26 @@ function Select({ label, options, selectValue, setSelectValue }) {
                 key={`option-${index.toString()}`}
                 className={`item item-id-${index}`}
                 id={`${index}`}
+                role={'option'}
+                tabIndex={0}
+                aria-selected={selectValue == item}
+                onKeyDown={(e) => {
+                  if(e.key !== 'Enter'){
+                    return
+                  }
+                  setSelectValue(item)
+                  setDisplayOptions(false)
+                }}
                 onClick={() => {
                   setSelectValue(item)
                   setDisplayOptions(false)
                 }}
               >
-                <span tabIndex={1}>{`${item}`}</span>
+                <span>{`${item}`}</span>
               </li>
             )
           })}
-        </div>
+        </ul>
       </div>
     </label>
   )
