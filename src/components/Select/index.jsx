@@ -1,5 +1,17 @@
-import { useState, useRef, useEffect } from 'react'
+//@ts-check
 
+import { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
+
+/**
+ *
+ * @param {Object} props
+ * @param {String} props.label
+ * @param {Array} props.options
+ * @param {String} props.selectValue
+ * @param {Function} props.setSelectValue
+ * @returns {React.ReactElement}
+ */
 function Select({ label, options, selectValue, setSelectValue }) {
   const [displayOptions, setDisplayOptions] = useState(false)
   const [dropdownContainerSize, setDropdownContainerSize] = useState({
@@ -36,7 +48,6 @@ function Select({ label, options, selectValue, setSelectValue }) {
   }
 
   useEffect(() => {
-    console.log(ulEl.current.childNodes[keyPressed].id)
     !displayOptions && setKeyPressed(0)
     // ulEl.current.childNodes[keyPressed].focus()
     if (displayOptions) {
@@ -81,14 +92,14 @@ function Select({ label, options, selectValue, setSelectValue }) {
               : { display: 'none' }
           }
           role="listbox"
-          tabIndex="0"
+          tabIndex={0}
         >
           {options.map((item, index) => {
             return (
               <li
                 key={`option-${index.toString()}`}
                 className={`item item-id-${index}`}
-                id={index}
+                id={`${index}`}
                 onClick={() => {
                   setSelectValue(item)
                   setDisplayOptions(false)
@@ -105,3 +116,14 @@ function Select({ label, options, selectValue, setSelectValue }) {
 }
 
 export default Select
+
+Select.propType = {
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+  selectValue: PropTypes.string,
+  setSelectValue: PropTypes.func.isRequired,
+}
+
+Select.defaultProps = {
+  selectValue: undefined,
+}

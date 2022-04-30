@@ -1,10 +1,26 @@
+//@ts-check
+
 import { useState } from 'react'
 import Rows from './Rows'
+import PropTypes from 'prop-types'
 
-function Table(props) {
+/**
+ *
+ * @param {Object} props
+ * @param {String} props.id
+ * @param {Array} props.data
+ * @param {Array} props.labels
+ * @param {Number} props.numberOfItemsByPage
+ * @returns {React.ReactElement}
+ */
+function Table({ id, data, labels, numberOfItemsByPage }) {
   const [pageNumber, setPageNumber] = useState(1)
 
-  const page = (array, pageSize, pageNumber) => {
+  function page(
+    /** @type {string | any[]} */ array,
+    /** @type {number} */ pageSize,
+    /** @type {number} */ pageNumber
+  ) {
     return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
   }
 
@@ -13,15 +29,15 @@ function Table(props) {
       <table>
         <thead>
           <tr>
-            {props.labels.map((item, index) => (
-              <th key={index} scope="col" colSpan="1">
+            {labels.map((item, index) => (
+              <th key={index} scope="col" colSpan={1}>
                 {item}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          <Rows labels={props.labels} data={page(props.data, 10, pageNumber)} />
+          <Rows data={page(data, numberOfItemsByPage, pageNumber)} />
         </tbody>
       </table>
       <div className={'pagination'}>
@@ -30,8 +46,8 @@ function Table(props) {
         </button>
         <button
           onClick={() =>
-            page(props.data, 10, pageNumber).length === 10 &&
-            setPageNumber(pageNumber + 1)
+            page(data, numberOfItemsByPage, pageNumber).length ===
+              numberOfItemsByPage && setPageNumber(pageNumber + 1)
           }
         >
           Next
@@ -42,3 +58,10 @@ function Table(props) {
 }
 
 export default Table
+
+Table.propType = {
+  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  data: PropTypes.array.isRequired,
+  labels: PropTypes.array.isRequired,
+}

@@ -1,3 +1,16 @@
+//@ts-check
+
+import PropTypes from 'prop-types'
+
+/**
+ *
+ * @param {Object} props
+ * @param {Boolean} props.isOpen
+ * @param {String} props.content
+ * @param {Function} props.setOpen
+ * @returns {React.ReactElement}
+ */
+
 function Modal(props) {
   return (
     <div className={`modalContainer ${props.isOpen ? '' : 'close'}`}>
@@ -12,3 +25,9 @@ function Modal(props) {
 }
 
 export default Modal
+
+Modal.propType = {
+  isOpen: PropTypes.bool.isRequired,
+  content: PropTypes.string.isRequired,
+  setOpen: PropTypes.func.isRequired,
+}

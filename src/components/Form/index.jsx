@@ -1,7 +1,19 @@
+//@ts-check
+
 import { useState } from 'react'
 import Input from '../Input'
 import Select from '../Select'
 import DatePickerApp from '../DatePicker'
+import PropTypes from 'prop-types'
+
+/**
+ *
+ * @param {Object} props
+ * @param {Array} props.states
+ * @param {Array} props.departments
+ * @param {Function} props.setSubmitData
+ * @returns {React.ReactElement}
+ */
 
 function Form({ states, departments, setSubmitData }) {
   const [firstName, setFirstName] = useState('')
@@ -14,7 +26,7 @@ function Form({ states, departments, setSubmitData }) {
   const [selectValueState, setSelectValueState] = useState()
   const [selectValueDepartment, setSelectValueDepartment] = useState()
 
-  const dateFormat = (date) =>
+  const dateFormat = (/** @type {Date} */ date) =>
     `${date.getDate() < 10 ? '0' : ''}${date.getDate()}/${
       date.getMonth() < 10 ? '0' : ''
     }${date.getMonth() + 1}/${date.getFullYear()}`
@@ -90,14 +102,12 @@ function Form({ states, departments, setSubmitData }) {
         type={'text'}
         label={'First Name'}
         id={'firstName'}
-        value={firstName}
         onChange={(e) => handleChange(e, 'firstName')}
       />
       <Input
         type={'text'}
         label={'Last Name'}
         id={'lastName'}
-        value={lastName}
         onChange={(e) => handleChange(e, 'lastName')}
       />
 
@@ -140,7 +150,7 @@ function Form({ states, departments, setSubmitData }) {
           label={'Zip code'}
           id={'zipCode'}
           onChange={(e) => handleChange(e, 'zipCode')}
-          pattern={'[0-9]{5}'}
+          // @ts-ignore
           min={0}
           max={99999}
         />
@@ -149,6 +159,7 @@ function Form({ states, departments, setSubmitData }) {
         <Select
           label={'Department'}
           options={departments}
+          // @ts-ignore
           setSelected={setSelectValueDepartment}
           selected={selectValueDepartment}
         />
@@ -161,3 +172,9 @@ function Form({ states, departments, setSubmitData }) {
 }
 
 export default Form
+
+Form.propType = {
+  states: PropTypes.array.isRequired,
+  departments: PropTypes.array.isRequired,
+  setSubmitData: PropTypes.func.isRequired,
+}

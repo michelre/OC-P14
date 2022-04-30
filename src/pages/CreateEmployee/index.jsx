@@ -1,11 +1,16 @@
+//@ts-check
+
 import React, { useEffect, useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { EmployeesContext } from '../../utils/context'
 import Form from '../../components/Form'
 import Header from '../../components/Header'
 import Modal from '../../components/Modal'
-import '../../App.css'
 
+/**
+ *
+ * @returns {React.ReactElement}
+ */
 function CreateEmployee() {
   const { saveEmployee } = useContext(EmployeesContext)
   const states = [
@@ -261,7 +266,7 @@ function CreateEmployee() {
     if (submittedData !== undefined) {
       saveEmployee(submittedData)
       setOpen(true)
-      setSubmittedData()
+      setSubmittedData(undefined)
     }
   }, [saveEmployee, submittedData])
 
